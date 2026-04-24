@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MwRouteImport } from './routes/mw'
 import { Route as IndexRouteImport } from './routes/index'
 
+const MwRoute = MwRouteImport.update({
+  id: '/mw',
+  path: '/mw',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/mw': typeof MwRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/mw': typeof MwRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/mw': typeof MwRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/mw'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/mw'
+  id: '__root__' | '/' | '/mw'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MwRoute: typeof MwRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/mw': {
+      id: '/mw'
+      path: '/mw'
+      fullPath: '/mw'
+      preLoaderRoute: typeof MwRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MwRoute: MwRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
