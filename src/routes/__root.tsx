@@ -1,9 +1,9 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import appCss from '../styles.css?url'
 import Layout from '@/components/layout'
+
+const DEFAULT_TITLE = 'sfour'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -16,7 +16,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: DEFAULT_TITLE,
       },
     ],
     links: [
@@ -34,20 +34,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang='en'>
       <head>
         <HeadContent />
+        <link rel='manifest' href='/manifest.json' />
+        <link rel='icon' type='image/x-icon' href='/favicon.png' />
+        <link rel='shortcut icon' type='image/x-icon' href='/favicon.png' />
+        <link rel='apple-touch-icon' href='/icon.png' />
       </head>
       <body>
         <Layout>{children}</Layout>
-        {/* <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        /> */}
         <Scripts />
       </body>
     </html>
