@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useLocalStorage } from '@uidotdev/usehooks'
-import { PencilSquareIcon } from '@heroicons/react/20/solid'
 
 import Textarea from '@/components/textarea'
 import useTextarea from '@/lib/useTextarea'
@@ -22,11 +21,7 @@ function RouteComponent() {
         <div className='flex space-x-4'>
           <Menu />
         </div>
-        <div className='flex space-x-4'>
-          <button className='text-cb-yellow hover:text-cb-yellow/75'>
-            <PencilSquareIcon className='h-6 w-6' />
-          </button>
-        </div>
+        <div className='flex space-x-4'></div>
       </footer>
     </>
   )
