@@ -1,9 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useLocalStorage } from '@uidotdev/usehooks'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
 
 import Textarea from '@/components/textarea'
 import useTextarea from '@/lib/useTextarea'
 import Menu from '@/components/menu'
+import { MWLink } from '@/components/mwt-links'
 
 export const Route = createFileRoute('/mw')({
   component: RouteComponent,
@@ -21,7 +23,11 @@ function RouteComponent() {
         <div className='flex space-x-4'>
           <Menu />
         </div>
-        <div className='flex space-x-4'></div>
+        <div className='flex space-x-4'>
+          <MWLink className='text-cb-yellow hover:text-cb-yellow/75'>
+            <ArrowTopRightOnSquareIcon className='h-6 w-6' />
+          </MWLink>
+        </div>
       </footer>
     </>
   )
