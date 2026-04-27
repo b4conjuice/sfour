@@ -1,23 +1,28 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { format } from 'date-fns'
+import { format, getDay } from 'date-fns'
 
 import Menu from '@/components/menu'
 import { MWLink, WTLink } from '@/components/mwt-links'
 import SettingsModal from '@/components/settings-modal'
+import useMidweekDayNumber from '@/lib/useMidweekDayNumber'
 
 export const Route = createFileRoute('/')({ component: Home })
 
 function Home() {
   const now = new Date()
-  const dateString = format(now, 'M.d.yy')
+  const dateString = format(now, 'E M.d.yy')
+  const [midweekDayNumber] = useMidweekDayNumber()
+  const todaysDayOfWeek = getDay(now)
+  const finishedMidweek = todaysDayOfWeek > Number(midweekDayNumber)
   return (
     <>
       <main className='flex grow flex-col p-4'>
         <div className='flex grow flex-col items-center justify-center space-y-4'>
           <h1 className='font-bold'>📖</h1>
           <p>{dateString}</p>
-          <MWLink />
+          {!finishedMidweek && <MWLink />}
           <WTLink />
+          {finishedMidweek && <MWLink />}
         </div>
       </main>
       <footer className='bg-cb-dusty-blue sticky bottom-0 flex items-center justify-between px-2 pt-2 pb-6'>
