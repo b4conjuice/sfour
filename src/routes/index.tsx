@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 
 import Menu from '@/components/menu'
 import { MWLink, WTLink } from '@/components/mwt-links'
+import SettingsModal from '@/components/settings-modal'
 
 export const Route = createFileRoute('/')({ component: Home })
 
@@ -23,7 +24,9 @@ function Home() {
         <div className='flex space-x-4'>
           <Menu />
         </div>
-        <div className='flex space-x-4'></div>
+        <div className='flex space-x-4'>
+          <SettingsModal />
+        </div>
       </footer>
     </>
   )
