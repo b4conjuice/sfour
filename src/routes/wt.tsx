@@ -5,7 +5,7 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
 import Textarea from '@/components/textarea'
 import useTextarea from '@/lib/useTextarea'
 import Menu from '@/components/menu'
-import { MWLink } from '@/components/mwt-links'
+import { WTLink } from '@/components/mwt-links'
 
 export const Route = createFileRoute('/wt')({
   component: RouteComponent,
@@ -24,9 +24,9 @@ function RouteComponent() {
           <Menu />
         </div>
         <div className='flex space-x-4'>
-          <MWLink className='text-cb-yellow hover:text-cb-yellow/75'>
+          <WTLink className='text-cb-yellow hover:text-cb-yellow/75'>
             <ArrowTopRightOnSquareIcon className='h-6 w-6' />
-          </MWLink>
+          </WTLink>
         </div>
       </footer>
     </>
