@@ -10,12 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WtRouteImport } from './routes/wt'
+import { Route as NotesRouteImport } from './routes/notes'
 import { Route as MwRouteImport } from './routes/mw'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiTrpcSplatRouteImport } from './routes/api.trpc.$'
 
 const WtRoute = WtRouteImport.update({
   id: '/wt',
   path: '/wt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesRoute = NotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MwRoute = MwRouteImport.update({
@@ -28,35 +35,48 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
+  id: '/api/trpc/$',
+  path: '/api/trpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/mw': typeof MwRoute
+  '/notes': typeof NotesRoute
   '/wt': typeof WtRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/mw': typeof MwRoute
+  '/notes': typeof NotesRoute
   '/wt': typeof WtRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/mw': typeof MwRoute
+  '/notes': typeof NotesRoute
   '/wt': typeof WtRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/mw' | '/wt'
+  fullPaths: '/' | '/mw' | '/notes' | '/wt' | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/mw' | '/wt'
-  id: '__root__' | '/' | '/mw' | '/wt'
+  to: '/' | '/mw' | '/notes' | '/wt' | '/api/trpc/$'
+  id: '__root__' | '/' | '/mw' | '/notes' | '/wt' | '/api/trpc/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MwRoute: typeof MwRoute
+  NotesRoute: typeof NotesRoute
   WtRoute: typeof WtRoute
+  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/wt'
       fullPath: '/wt'
       preLoaderRoute: typeof WtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes': {
+      id: '/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof NotesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mw': {
@@ -82,23 +109,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/trpc/$': {
+      id: '/api/trpc/$'
+      path: '/api/trpc/$'
+      fullPath: '/api/trpc/$'
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MwRoute: MwRoute,
+  NotesRoute: NotesRoute,
   WtRoute: WtRoute,
+  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

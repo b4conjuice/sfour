@@ -1,5 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 
+import ClerkProvider from '../integrations/clerk/provider'
+
 import appCss from '../styles.css?url'
 import Layout from '@/components/layout'
 
@@ -40,7 +42,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <link rel='apple-touch-icon' href='/icon.png' />
       </head>
       <body>
-        <Layout>{children}</Layout>
+        <ClerkProvider>
+          <Layout>{children}</Layout>
+        </ClerkProvider>
         <Scripts />
       </body>
     </html>
