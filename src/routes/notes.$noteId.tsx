@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Show } from '@clerk/tanstack-react-start'
 import {
-  Bars2Icon,
   DocumentTextIcon,
   ListBulletIcon,
   PencilSquareIcon,
