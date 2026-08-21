@@ -10,7 +10,7 @@ import NoteListSkeleton from '@/components/note-list-skeleton'
 import { newNoteUrl } from '@/lib/constants'
 import Menu from '@/components/menu'
 
-export const Route = createFileRoute('/notes')({
+export const Route = createFileRoute('/notes/')({
   component: Notes,
   validateSearch: (search: Record<string, string>) => {
     return {

@@ -8,7 +8,7 @@ import type { Note } from '@/lib/types'
 import useSearch from '@/lib/useSearch'
 import { newNoteUrl } from '@/lib/constants'
 
-const routeApi = getRouteApi('/notes')
+const routeApi = getRouteApi('/notes/')
 
 export default function NoteList({ notes }: { notes: Note[] }) {
   const searchParams = routeApi.useSearch()
