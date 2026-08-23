@@ -13,6 +13,7 @@ import { Route as WtRouteImport } from './routes/wt'
 import { Route as MwRouteImport } from './routes/mw'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NotesIndexRouteImport } from './routes/notes.index'
+import { Route as ListsIndexRouteImport } from './routes/lists.index'
 import { Route as NotesNoteIdRouteImport } from './routes/notes.$noteId'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api.trpc.$'
 
@@ -36,6 +37,11 @@ const NotesIndexRoute = NotesIndexRouteImport.update({
   path: '/notes/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListsIndexRoute = ListsIndexRouteImport.update({
+  id: '/lists/',
+  path: '/lists/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotesNoteIdRoute = NotesNoteIdRouteImport.update({
   id: '/notes/$noteId',
   path: '/notes/$noteId',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/mw': typeof MwRoute
   '/wt': typeof WtRoute
   '/notes/$noteId': typeof NotesNoteIdRoute
+  '/lists/': typeof ListsIndexRoute
   '/notes/': typeof NotesIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/mw': typeof MwRoute
   '/wt': typeof WtRoute
   '/notes/$noteId': typeof NotesNoteIdRoute
+  '/lists': typeof ListsIndexRoute
   '/notes': typeof NotesIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
@@ -69,20 +77,36 @@ export interface FileRoutesById {
   '/mw': typeof MwRoute
   '/wt': typeof WtRoute
   '/notes/$noteId': typeof NotesNoteIdRoute
+  '/lists/': typeof ListsIndexRoute
   '/notes/': typeof NotesIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/mw' | '/wt' | '/notes/$noteId' | '/notes/' | '/api/trpc/$'
+  fullPaths:
+    | '/'
+    | '/mw'
+    | '/wt'
+    | '/notes/$noteId'
+    | '/lists/'
+    | '/notes/'
+    | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/mw' | '/wt' | '/notes/$noteId' | '/notes' | '/api/trpc/$'
+  to:
+    | '/'
+    | '/mw'
+    | '/wt'
+    | '/notes/$noteId'
+    | '/lists'
+    | '/notes'
+    | '/api/trpc/$'
   id:
     | '__root__'
     | '/'
     | '/mw'
     | '/wt'
     | '/notes/$noteId'
+    | '/lists/'
     | '/notes/'
     | '/api/trpc/$'
   fileRoutesById: FileRoutesById
@@ -92,6 +116,7 @@ export interface RootRouteChildren {
   MwRoute: typeof MwRoute
   WtRoute: typeof WtRoute
   NotesNoteIdRoute: typeof NotesNoteIdRoute
+  ListsIndexRoute: typeof ListsIndexRoute
   NotesIndexRoute: typeof NotesIndexRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
@@ -126,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NotesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lists/': {
+      id: '/lists/'
+      path: '/lists'
+      fullPath: '/lists/'
+      preLoaderRoute: typeof ListsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notes/$noteId': {
       id: '/notes/$noteId'
       path: '/notes/$noteId'
@@ -148,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   MwRoute: MwRoute,
   WtRoute: WtRoute,
   NotesNoteIdRoute: NotesNoteIdRoute,
+  ListsIndexRoute: ListsIndexRoute,
   NotesIndexRoute: NotesIndexRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
