@@ -37,7 +37,7 @@ function RouteComponent() {
   return (
     <>
       <TopNav title={title} />
-      <div className='flex grow flex-col p-4'>
+      <div className='flex grow flex-col px-4'>
         {/* <pre className='whitespace-pre-wrap'>{note.text}</pre> */}
         <ScriptureList list={list} />
       </div>

@@ -4,10 +4,10 @@ import {
 } from '@heroicons/react/20/solid'
 
 // import { transformTextToScripture } from '@/lib/books'
+import { transformBibleParamToScripture } from '@/lib/book-search'
 // import useOpenScriptureUrl from '@/lib/useOpenScriptureUrl'
 import { textUrl } from '@/lib/constants'
 // import type { Scripture } from '@/lib/types'
-const transformTextToScripture = (bibleParam: string) => bibleParam
 const useOpenScriptureUrl = () => (scripture: string) => console.log(scripture)
 
 export default function ScriptureList({
@@ -21,7 +21,7 @@ export default function ScriptureList({
   return (
     <ul className='divide-cb-dusty-blue divide-y'>
       {list.map((bibleParam, index) => {
-        const scripture = transformTextToScripture(bibleParam)
+        const scripture = transformBibleParamToScripture(bibleParam)
         if (scripture === '') {
           return (
             <li key={index} className='group flex space-x-2'>
@@ -41,8 +41,7 @@ export default function ScriptureList({
               target='_blank'
             >
               <div>
-                {/* <div>{scripture.asString}</div> */}
-                <div>{scripture}</div>
+                <div>{scripture.asString}</div>
               </div>
             </a>
             <button
