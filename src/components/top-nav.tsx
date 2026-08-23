@@ -7,9 +7,9 @@ import {
 import { Link, useLocation } from '@tanstack/react-router'
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/react/20/solid'
 
-const title = 'sfour'
+const DEFAULT_TITLE = 'sfour'
 
-export default function TopNav() {
+export default function TopNav({ title = DEFAULT_TITLE }: { title?: string }) {
   const { user } = useUser()
   const username = user?.username
   const { pathname } = useLocation()

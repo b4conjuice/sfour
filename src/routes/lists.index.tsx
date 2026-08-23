@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { Show } from '@clerk/tanstack-react-start'
 import { PencilSquareIcon } from '@heroicons/react/20/solid'
@@ -44,15 +44,14 @@ function ScriptureLists() {
         )
         .map(note => (
           <li key={note.id} className='group flex items-center space-x-2'>
-            <a
-              href={editListUrl(note.id)}
+            <Link
+              to={`/lists/${note.id}`}
               className='text-cb-pink hover:text-cb-pink/75 flex grow items-center justify-between py-4 group-first:pt-0'
-              target='_blank'
             >
               <div>
                 <div>{note.title}</div>
               </div>
-            </a>
+            </Link>
             <a
               className='text-cb-pink hover:text-cb-pink/75 disabled:pointer-events-none disabled:opacity-25'
               href={editNoteUrl(note.id)}

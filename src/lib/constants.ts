@@ -7,6 +7,9 @@ export const editNoteUrl = (noteId: string | number) =>
 export const editListUrl = (noteId: string | number) =>
   `https://s4.dlopez.app/lists/${noteId}`
 
+export const textUrl = (bibleParam: string) =>
+  `https://s4.dlopez.app/text/${bibleParam}`
+
 export const markdownNoteUrl = (noteId: string) =>
   `https://md.n4.dlopez.app/${noteId}`
 
