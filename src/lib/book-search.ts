@@ -63,6 +63,25 @@ export function transformBibleParamToScripture(bibleParam: string) {
   return scripture
 }
 
+export function getScriptureUrl(
+  bibleParam: string,
+  scriptureUrlType: ScriptureUrlType = 'jwlibrary'
+) {
+  const scripture = transformBibleParamToScripture(bibleParam)
+  if (scripture === '') {
+    return ''
+  }
+  const { bookNumber, chapter, verse } = scripture
+  const wolBibleText = Array.isArray(verse)
+    ? `${bookNumber}/${chapter}#v=${bookNumber}:${chapter}:${verse[0]}-${bookNumber}:${chapter}:${verse[1]}`
+    : `${bookNumber}/${chapter}/${verse}`
+
+  const scriptureUrlBase = scriptureUrlTypeToUrlMap[scriptureUrlType]
+  const scriptureInUrl = scriptureUrlType === 'wol' ? wolBibleText : bibleParam
+  const scriptureUrl = `${scriptureUrlBase}${scriptureInUrl}`
+  return scriptureUrl
+}
+
 // from: https://github.com/b4conjuice/s5/blob/main/src/components/book-search/lib/types.ts
 export type BookNumber = keyof typeof bookNumberToBookMap
 export type Scripture = {
@@ -73,6 +92,8 @@ export type Scripture = {
   verse: number | [number, number]
   asString?: string
 }
+
+export type ScriptureUrlType = keyof typeof scriptureUrlTypeToUrlMap
 
 // from: https://github.com/b4conjuice/s5/blob/main/src/components/book-search/lib/constants.ts
 
@@ -344,3 +365,15 @@ const BOOKS = {
 } as const
 
 export const bookNumberToBookMap = BOOKS
+
+// examples:
+// jwlibrary://view/finder?srcid=jwlshare&wtlocale=E&prefer=lang&pub=nwtsty&bible=01001001
+// https://www.jw.org/finder?srcid=jwlshare&wtlocale=E&prefer=lang&pub=nwtsty&bible=01001001
+// https://wol.jw.org/en/wol/b/r1/lp-e/nwtsty/1/1/1
+export const scriptureUrlTypeToUrlMap = {
+  jwlibrary:
+    'jwlibrary://view/finder?srcid=jwlshare&wtlocale=E&prefer=lang&pub=nwtsty&bible=',
+  jworg:
+    'https://www.jw.org/finder?srcid=jwlshare&wtlocale=E&prefer=lang&pub=nwtsty&bible=',
+  wol: 'https://wol.jw.org/en/wol/b/r1/lp-e/nwtsty/',
+} as const

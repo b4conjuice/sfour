@@ -3,12 +3,11 @@ import {
   // EllipsisVerticalIcon,
 } from '@heroicons/react/20/solid'
 
-// import { transformTextToScripture } from '@/lib/books'
-import { transformBibleParamToScripture } from '@/lib/book-search'
-// import useOpenScriptureUrl from '@/lib/useOpenScriptureUrl'
+import {
+  getScriptureUrl,
+  transformBibleParamToScripture,
+} from '@/lib/book-search'
 import { textUrl } from '@/lib/constants'
-// import type { Scripture } from '@/lib/types'
-const useOpenScriptureUrl = () => (scripture: string) => console.log(scripture)
 
 export default function ScriptureList({
   list,
@@ -17,11 +16,11 @@ export default function ScriptureList({
   list: string[]
   // onSelectScripture?: (scripture: Scripture) => void
 }) {
-  const openScriptureUrl = useOpenScriptureUrl()
   return (
     <ul className='divide-cb-dusty-blue divide-y'>
       {list.map((bibleParam, index) => {
         const scripture = transformBibleParamToScripture(bibleParam)
+        const scriptureUrl = getScriptureUrl(bibleParam)
         if (scripture === '') {
           return (
             <li key={index} className='group flex space-x-2'>
@@ -44,15 +43,13 @@ export default function ScriptureList({
                 <div>{scripture.asString}</div>
               </div>
             </a>
-            <button
+            <a
               className='text-cb-pink hover:text-cb-pink/75 disabled:pointer-events-none disabled:opacity-25'
-              type='button'
-              onClick={() => {
-                openScriptureUrl(scripture)
-              }}
+              href={scriptureUrl}
+              target='_blank'
             >
               <ArrowTopRightOnSquareIcon className='h-6 w-6' />
-            </button>
+            </a>
             {/* {onSelectScripture && (
               <button
                 className='text-cb-pink hover:text-cb-pink/75 disabled:pointer-events-none disabled:opacity-25'
