@@ -13,7 +13,7 @@ import { useTRPC } from '@/integrations/trpc/react'
 import CommandPalette from '@/components/command-palette'
 import { editNoteUrl, editListUrl } from '@/lib/constants'
 import Menu from '@/components/menu'
-import ScriptureList from '@/components/scripture-list'
+import BibleParamList from '@/components/bible-param-list'
 
 export const Route = createFileRoute('/lists/$noteId')({
   component: RouteComponent,
@@ -39,7 +39,7 @@ function RouteComponent() {
       <TopNav title={title} />
       <div className='flex grow flex-col px-4'>
         {/* <pre className='whitespace-pre-wrap'>{note.text}</pre> */}
-        <ScriptureList list={list} />
+        <BibleParamList list={list} />
       </div>
       <footer className='bg-cb-dusty-blue sticky bottom-0 flex items-center justify-between px-2 pt-2 pb-6'>
         <div className='flex space-x-4'>
