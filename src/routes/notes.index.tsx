@@ -24,7 +24,7 @@ function Notes() {
   const { data: notes } = useQuery(trpc.notes.getAll.queryOptions())
   return (
     <>
-      <TopNav />
+      <TopNav title='notes' />
       <main className='flex grow flex-col gap-4 px-4'>
         <Show when='signed-out'>
           <p>login to see your notes</p>

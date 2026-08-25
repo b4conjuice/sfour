@@ -68,7 +68,7 @@ function ScriptureLists() {
 function RouteComponent() {
   return (
     <>
-      <TopNav />
+      <TopNav title='lists' />
       <main className='flex grow flex-col gap-4 px-4'>
         <Show when='signed-out'>
           <p>login to see your lists</p>
