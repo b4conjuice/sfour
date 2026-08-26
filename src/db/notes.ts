@@ -1,15 +1,14 @@
 import { auth } from '@clerk/tanstack-react-start/server'
-import { and } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 
 import { db } from '@/db'
+import { notes } from './schema'
 
 const LIMIT = 100
 
 export async function getNotes() {
   const user = await auth()
-
   if (!user.userId) throw new Error('unauthorized')
-
   return await db.query.notes.findMany({
     where: (model, { eq }) => eq(model.author, user.userId),
     orderBy: (model, { desc }) => desc(model.updatedAt),
@@ -23,4 +22,33 @@ export async function getNote(id: number) {
   })
 
   return note
+}
+
+// TODO: add option to filter by bibleParam
+export async function getGems() {
+  const user = await auth()
+
+  if (!user.userId) throw new Error('unauthorized')
+
+  // First get note IDs for this user
+  const userNoteIds = db
+    .select({ id: notes.id })
+    .from(notes)
+    .where(eq(notes.author, user.userId))
+
+  const gemsWithNotes = await db.query.gems.findMany({
+    with: {
+      note: true,
+    },
+    where: (model, { inArray }) => inArray(model.noteId, userNoteIds),
+    orderBy: (model, { desc }) => desc(model.noteId),
+    limit: LIMIT,
+  })
+
+  return gemsWithNotes.map(gem => ({
+    ...gem.note,
+    gem: {
+      bibleParam: gem.bibleParam,
+    },
+  }))
 }

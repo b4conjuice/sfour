@@ -14,8 +14,11 @@ import { Route as MwRouteImport } from './routes/mw'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NotesIndexRouteImport } from './routes/notes.index'
 import { Route as ListsIndexRouteImport } from './routes/lists.index'
+import { Route as GemsIndexRouteImport } from './routes/gems.index'
 import { Route as NotesNoteIdRouteImport } from './routes/notes.$noteId'
 import { Route as ListsNoteIdRouteImport } from './routes/lists.$noteId'
+import { Route as GemsBibleParamIndexRouteImport } from './routes/gems.$bibleParam.index'
+import { Route as GemsBibleParamNewRouteImport } from './routes/gems.$bibleParam.new'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api.trpc.$'
 
 const WtRoute = WtRouteImport.update({
@@ -43,6 +46,11 @@ const ListsIndexRoute = ListsIndexRouteImport.update({
   path: '/lists/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GemsIndexRoute = GemsIndexRouteImport.update({
+  id: '/gems/',
+  path: '/gems/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotesNoteIdRoute = NotesNoteIdRouteImport.update({
   id: '/notes/$noteId',
   path: '/notes/$noteId',
@@ -51,6 +59,16 @@ const NotesNoteIdRoute = NotesNoteIdRouteImport.update({
 const ListsNoteIdRoute = ListsNoteIdRouteImport.update({
   id: '/lists/$noteId',
   path: '/lists/$noteId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GemsBibleParamIndexRoute = GemsBibleParamIndexRouteImport.update({
+  id: '/gems/$bibleParam/',
+  path: '/gems/$bibleParam/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GemsBibleParamNewRoute = GemsBibleParamNewRouteImport.update({
+  id: '/gems/$bibleParam/new',
+  path: '/gems/$bibleParam/new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
@@ -65,9 +83,12 @@ export interface FileRoutesByFullPath {
   '/wt': typeof WtRoute
   '/lists/$noteId': typeof ListsNoteIdRoute
   '/notes/$noteId': typeof NotesNoteIdRoute
+  '/gems/': typeof GemsIndexRoute
   '/lists/': typeof ListsIndexRoute
   '/notes/': typeof NotesIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/gems/$bibleParam/new': typeof GemsBibleParamNewRoute
+  '/gems/$bibleParam/': typeof GemsBibleParamIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -75,9 +96,12 @@ export interface FileRoutesByTo {
   '/wt': typeof WtRoute
   '/lists/$noteId': typeof ListsNoteIdRoute
   '/notes/$noteId': typeof NotesNoteIdRoute
+  '/gems': typeof GemsIndexRoute
   '/lists': typeof ListsIndexRoute
   '/notes': typeof NotesIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/gems/$bibleParam/new': typeof GemsBibleParamNewRoute
+  '/gems/$bibleParam': typeof GemsBibleParamIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -86,9 +110,12 @@ export interface FileRoutesById {
   '/wt': typeof WtRoute
   '/lists/$noteId': typeof ListsNoteIdRoute
   '/notes/$noteId': typeof NotesNoteIdRoute
+  '/gems/': typeof GemsIndexRoute
   '/lists/': typeof ListsIndexRoute
   '/notes/': typeof NotesIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/gems/$bibleParam/new': typeof GemsBibleParamNewRoute
+  '/gems/$bibleParam/': typeof GemsBibleParamIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -98,9 +125,12 @@ export interface FileRouteTypes {
     | '/wt'
     | '/lists/$noteId'
     | '/notes/$noteId'
+    | '/gems/'
     | '/lists/'
     | '/notes/'
     | '/api/trpc/$'
+    | '/gems/$bibleParam/new'
+    | '/gems/$bibleParam/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -108,9 +138,12 @@ export interface FileRouteTypes {
     | '/wt'
     | '/lists/$noteId'
     | '/notes/$noteId'
+    | '/gems'
     | '/lists'
     | '/notes'
     | '/api/trpc/$'
+    | '/gems/$bibleParam/new'
+    | '/gems/$bibleParam'
   id:
     | '__root__'
     | '/'
@@ -118,9 +151,12 @@ export interface FileRouteTypes {
     | '/wt'
     | '/lists/$noteId'
     | '/notes/$noteId'
+    | '/gems/'
     | '/lists/'
     | '/notes/'
     | '/api/trpc/$'
+    | '/gems/$bibleParam/new'
+    | '/gems/$bibleParam/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -129,9 +165,12 @@ export interface RootRouteChildren {
   WtRoute: typeof WtRoute
   ListsNoteIdRoute: typeof ListsNoteIdRoute
   NotesNoteIdRoute: typeof NotesNoteIdRoute
+  GemsIndexRoute: typeof GemsIndexRoute
   ListsIndexRoute: typeof ListsIndexRoute
   NotesIndexRoute: typeof NotesIndexRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
+  GemsBibleParamNewRoute: typeof GemsBibleParamNewRoute
+  GemsBibleParamIndexRoute: typeof GemsBibleParamIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -171,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gems/': {
+      id: '/gems/'
+      path: '/gems'
+      fullPath: '/gems/'
+      preLoaderRoute: typeof GemsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notes/$noteId': {
       id: '/notes/$noteId'
       path: '/notes/$noteId'
@@ -183,6 +229,20 @@ declare module '@tanstack/react-router' {
       path: '/lists/$noteId'
       fullPath: '/lists/$noteId'
       preLoaderRoute: typeof ListsNoteIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gems/$bibleParam/': {
+      id: '/gems/$bibleParam/'
+      path: '/gems/$bibleParam'
+      fullPath: '/gems/$bibleParam/'
+      preLoaderRoute: typeof GemsBibleParamIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gems/$bibleParam/new': {
+      id: '/gems/$bibleParam/new'
+      path: '/gems/$bibleParam/new'
+      fullPath: '/gems/$bibleParam/new'
+      preLoaderRoute: typeof GemsBibleParamNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/trpc/$': {
@@ -201,9 +261,12 @@ const rootRouteChildren: RootRouteChildren = {
   WtRoute: WtRoute,
   ListsNoteIdRoute: ListsNoteIdRoute,
   NotesNoteIdRoute: NotesNoteIdRoute,
+  GemsIndexRoute: GemsIndexRoute,
   ListsIndexRoute: ListsIndexRoute,
   NotesIndexRoute: NotesIndexRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
+  GemsBibleParamNewRoute: GemsBibleParamNewRoute,
+  GemsBibleParamIndexRoute: GemsBibleParamIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

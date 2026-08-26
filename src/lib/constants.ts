@@ -14,3 +14,4 @@ export const markdownNoteUrl = (noteId: string) =>
   `https://md.n4.dlopez.app/${noteId}`
 
 export const SCRIPTURE_LIST_TAGS = ['📖', '📚']
+export const GEM_TAGS = ['📖', '💎']

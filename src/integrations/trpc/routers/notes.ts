@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { publicProcedure } from '../init'
 
 import type { TRPCRouterRecord } from '@trpc/server'
-import { getNote, getNotes } from '@/db/notes'
+import { getGems, getNote, getNotes } from '@/db/notes'
 
 export const notesRouter = {
   getById: publicProcedure
@@ -15,5 +15,8 @@ export const notesRouter = {
     }),
   getAll: publicProcedure.query(async () => {
     return await getNotes()
+  }),
+  getAllGems: publicProcedure.query(async () => {
+    return await getGems()
   }),
 } satisfies TRPCRouterRecord

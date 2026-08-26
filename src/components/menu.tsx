@@ -13,6 +13,7 @@ const nav = [
   { text: 'wt', href: '/wt' },
   { text: 'notes', href: '/notes' },
   { text: 'lists', href: '/lists' },
+  { text: 'gems', href: '/gems' },
 ]
 
 export default function Menu() {
