@@ -2,7 +2,9 @@ import { auth } from '@clerk/tanstack-react-start/server'
 import { and, eq } from 'drizzle-orm'
 
 import { db } from '@/db'
-import { notes } from './schema'
+import { notes, gems } from './schema'
+import type { NewGem, NewNote, Note } from '@/lib/types'
+import { GEM_TAGS } from '@/lib/constants'
 
 const LIMIT = 100
 
@@ -22,6 +24,28 @@ export async function getNote(id: number) {
   })
 
   return note
+}
+
+export async function saveNote(note: Note | NewNote) {
+  const { tags } = note
+  const newTags = [...new Set([...tags, ...GEM_TAGS])]
+
+  const newNotes = await db
+    .insert(notes)
+    .values(note)
+    .onConflictDoUpdate({
+      target: notes.id,
+      set: {
+        ...note,
+        tags: newTags,
+      },
+    })
+    .returning()
+  if (newNotes.length < 0) {
+    throw new Error('something went wrong')
+  }
+  const newNote = newNotes[0]
+  return newNote
 }
 
 // TODO: add option to filter by bibleParam
@@ -51,4 +75,12 @@ export async function getGems() {
       bibleParam: gem.bibleParam,
     },
   }))
+}
+
+export async function saveGem({ noteId, bibleParam }: NewGem) {
+  const newGem = await db.insert(gems).values({
+    noteId,
+    bibleParam,
+  })
+  return newGem
 }
