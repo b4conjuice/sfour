@@ -65,6 +65,8 @@ function GemList() {
   )
 }
 
+const NEW_GEM_URL = `https://s5.dlo.app/gems/new`
+
 function RouteComponent() {
   return (
     <>
@@ -81,7 +83,15 @@ function RouteComponent() {
         <div className='flex space-x-4'>
           <Menu />
         </div>
-        <div className='flex space-x-4'></div>
+        <div className='flex space-x-4'>
+          <a
+            className='text-cb-yellow hover:text-cb-yellow/75 disabled:pointer-events-none disabled:opacity-25'
+            href={NEW_GEM_URL}
+            target='_blank'
+          >
+            <PencilSquareIcon className='h-6 w-6' />
+          </a>
+        </div>
       </footer>
     </>
   )
