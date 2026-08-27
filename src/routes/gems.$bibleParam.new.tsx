@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Show } from '@clerk/tanstack-react-start'
 import { useMutation } from '@tanstack/react-query'
 import { useLocalStorage } from '@uidotdev/usehooks'
-import { PencilSquareIcon } from '@heroicons/react/20/solid'
+import { ArrowDownOnSquareIcon } from '@heroicons/react/20/solid'
 
 import Menu from '@/components/menu'
 import { GEM_TAGS } from '@/lib/constants'
@@ -79,7 +79,7 @@ function RouteComponent() {
               }}
               disabled={!canSave || isSavingGem}
             >
-              <PencilSquareIcon className='h-6 w-6' />
+              <ArrowDownOnSquareIcon className='h-6 w-6' />
             </button>
           </Show>
         </div>
