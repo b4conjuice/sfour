@@ -5,8 +5,28 @@ import Menu from '@/components/menu'
 import { MWLink, WTLink } from '@/components/mwt-links'
 import SettingsModal from '@/components/settings-modal'
 import useMidweekDayNumber from '@/lib/useMidweekDayNumber'
+import { getDailyTextUrl } from '@/lib/constants'
 
 export const Route = createFileRoute('/')({ component: Home })
+
+function DTLink({
+  className,
+  children,
+}: {
+  className?: string
+  children?: React.ReactNode
+}) {
+  const now = new Date()
+  return (
+    <a
+      className={className ?? 'text-cb-pink hover:text-cb-pink/75'}
+      href={getDailyTextUrl(now)}
+      target='_blank'
+    >
+      {children ?? 'dt'}
+    </a>
+  )
+}
 
 function Home() {
   const now = new Date()
@@ -20,6 +40,7 @@ function Home() {
         <div className='flex grow flex-col items-center justify-center space-y-4'>
           <h1 className='font-bold'>📖</h1>
           <p>{dateString}</p>
+          <DTLink />
           {!finishedMidweek && <MWLink />}
           <WTLink />
           {finishedMidweek && <MWLink />}

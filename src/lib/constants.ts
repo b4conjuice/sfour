@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 export const newNoteUrl = 'https://s4.dlopez.app/notes/new'
 export const newListUrl = 'https://s4.dlopez.app/lists/new'
 
@@ -15,3 +17,9 @@ export const markdownNoteUrl = (noteId: string) =>
 
 export const SCRIPTURE_LIST_TAGS = ['📖', '📚']
 export const GEM_TAGS = ['📖', '💎']
+
+const DAILY_TEXT_URL =
+  'https://www.jw.org/finder?srcid=jwlshare&wtlocale=E&prefer=lang&alias=daily-text&date='
+
+export const getDailyTextUrl = (date: Date) =>
+  `${DAILY_TEXT_URL}${format(date, 'yyyyMMdd')}`
