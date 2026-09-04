@@ -1,6 +1,6 @@
 import { add, format, getDay } from 'date-fns'
 
-import { getMeetingsUrl } from '@/lib/mwt'
+import { getMeetingsUrl } from '@/lib/constants'
 import useMidweekDayNumber from '@/lib/useMidweekDayNumber'
 
 export function MWLink({

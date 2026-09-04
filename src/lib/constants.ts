@@ -18,6 +18,10 @@ export const markdownNoteUrl = (noteId: string) =>
 export const SCRIPTURE_LIST_TAGS = ['📖', '📚']
 export const GEM_TAGS = ['📖', '💎']
 
+const MEETINGS_URL = 'https://wol.jw.org/en/wol/meetings/r1/lp-e/'
+
+export const getMeetingsUrl = (week?: string) => `${MEETINGS_URL}${week ?? ''}`
+
 const DAILY_TEXT_URL =
   'https://www.jw.org/finder?srcid=jwlshare&wtlocale=E&prefer=lang&alias=daily-text&date='
 
