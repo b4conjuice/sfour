@@ -16,9 +16,15 @@ export const notesRouter = {
 
       return await getNote(noteId)
     }),
-  getAll: publicProcedure.query(async () => {
-    return await getNotes()
-  }),
+  getAll: publicProcedure
+    .input(
+      z
+        .object({ offset: z.number().optional(), q: z.string().optional() })
+        .optional()
+    )
+    .query(async ({ input }) => {
+      return await getNotes(input)
+    }),
   // getGemsByBibleParam: publicProcedure
   //   .input(z.object({ bibleParam: z.string() }))
   //   .query(async ({ input }) => {
