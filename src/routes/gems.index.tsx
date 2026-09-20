@@ -48,16 +48,14 @@ function GemList() {
               >
                 <div>
                   <div>{note.title}</div>
-                  {scripture !== '' && <div>{scripture.asString}</div>}
                 </div>
               </Link>
-              <a
-                className='text-cb-pink hover:text-cb-pink/75 disabled:pointer-events-none disabled:opacity-25'
-                href={editNoteUrl(note.id)}
+              <span
+                className='text-cb-yellow hover:text-cb-yellow/75 disabled:pointer-events-none disabled:opacity-25'
                 target='_blank'
               >
-                <PencilSquareIcon className='h-6 w-6' />
-              </a>
+                {scripture !== '' && <div>{scripture.asString}</div>}
+              </span>
             </li>
           )
         })}
