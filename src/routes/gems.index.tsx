@@ -6,8 +6,11 @@ import { PencilSquareIcon } from '@heroicons/react/20/solid'
 import TopNav from '@/components/top-nav'
 import Menu from '@/components/menu'
 import { useTRPC } from '@/integrations/trpc/react'
-import { editNoteUrl, GEM_TAGS } from '@/lib/constants'
-import { transformBibleParamToScripture } from '@/lib/book-search'
+import { GEM_TAGS } from '@/lib/constants'
+import {
+  getScriptureUrl,
+  transformBibleParamToScripture,
+} from '@/lib/book-search'
 
 export const Route = createFileRoute('/gems/')({
   component: RouteComponent,
@@ -39,23 +42,28 @@ function GemList() {
       {(gems ?? [])
         .filter(note => GEM_TAGS.every(tag => note.tags.includes(tag)))
         .map(note => {
-          const scripture = transformBibleParamToScripture(note.gem.bibleParam)
+          const bibleParam = note.gem.bibleParam
+          const scripture = transformBibleParamToScripture(bibleParam)
+          const scriptureUrl = getScriptureUrl(bibleParam)
           return (
-            <li key={note.id} className='group flex items-center space-x-2'>
-              <Link
-                to={`/notes/${note.id}`}
-                className='text-cb-pink hover:text-cb-pink/75 flex grow items-center justify-between py-4 group-first:pt-0'
-              >
-                <div>
-                  <div>{note.title}</div>
-                </div>
-              </Link>
-              <span
-                className='text-cb-yellow hover:text-cb-yellow/75 disabled:pointer-events-none disabled:opacity-25'
-                target='_blank'
-              >
-                {scripture !== '' && <div>{scripture.asString}</div>}
-              </span>
+            <li key={note.id} className='py-4 first:pt-0'>
+              <div className='flex items-center space-x-2'>
+                <Link
+                  to={`/notes/${note.id}`}
+                  className='text-cb-pink hover:text-cb-pink/75 flex grow items-center justify-between'
+                >
+                  <div>
+                    <div>{note.title}</div>
+                  </div>
+                </Link>
+                <a
+                  className='text-cb-yellow hover:text-cb-yellow/75 disabled:pointer-events-none disabled:opacity-25'
+                  href={scriptureUrl}
+                  target='_blank'
+                >
+                  {scripture !== '' && <div>{scripture.asString}</div>}
+                </a>
+              </div>
             </li>
           )
         })}
