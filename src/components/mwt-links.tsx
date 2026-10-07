@@ -6,12 +6,14 @@ import useMidweekDayNumber from '@/lib/useMidweekDayNumber'
 export function MWLink({
   className,
   children,
+  date: dateProp,
 }: {
   className?: string
   children?: React.ReactNode
+  date?: Date
 }) {
   const [midweekDayNumber] = useMidweekDayNumber()
-  const now = new Date()
+  const now = dateProp ?? new Date()
   const todaysDayOfWeek = getDay(now)
   const finishedMidweek = todaysDayOfWeek > Number(midweekDayNumber)
   const thisWeek = format(now, 'yyyy/w')
