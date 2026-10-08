@@ -9,21 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WtRouteImport } from './routes/wt'
-import { Route as MwRouteImport } from './routes/mw'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as NotesIndexRouteImport } from './routes/notes.index'
-import { Route as ListsIndexRouteImport } from './routes/lists.index'
+import { Route as MwRouteImport } from './routes/mw'
+import { Route as WtRouteImport } from './routes/wt'
 import { Route as GemsIndexRouteImport } from './routes/gems.index'
-import { Route as NotesNoteIdRouteImport } from './routes/notes.$noteId'
+import { Route as ListsIndexRouteImport } from './routes/lists.index'
 import { Route as ListsNoteIdRouteImport } from './routes/lists.$noteId'
+import { Route as NotesIndexRouteImport } from './routes/notes.index'
+import { Route as NotesNoteIdRouteImport } from './routes/notes.$noteId'
+import { Route as ApiTrpcSplatRouteImport } from './routes/api.trpc.$'
 import { Route as GemsBibleParamIndexRouteImport } from './routes/gems.$bibleParam.index'
 import { Route as GemsBibleParamNewRouteImport } from './routes/gems.$bibleParam.new'
-import { Route as ApiTrpcSplatRouteImport } from './routes/api.trpc.$'
 
-const WtRoute = WtRouteImport.update({
-  id: '/wt',
-  path: '/wt',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MwRoute = MwRouteImport.update({
@@ -31,19 +31,9 @@ const MwRoute = MwRouteImport.update({
   path: '/mw',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NotesIndexRoute = NotesIndexRouteImport.update({
-  id: '/notes/',
-  path: '/notes/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ListsIndexRoute = ListsIndexRouteImport.update({
-  id: '/lists/',
-  path: '/lists/',
+const WtRoute = WtRouteImport.update({
+  id: '/wt',
+  path: '/wt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GemsIndexRoute = GemsIndexRouteImport.update({
@@ -51,14 +41,29 @@ const GemsIndexRoute = GemsIndexRouteImport.update({
   path: '/gems/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NotesNoteIdRoute = NotesNoteIdRouteImport.update({
-  id: '/notes/$noteId',
-  path: '/notes/$noteId',
+const ListsIndexRoute = ListsIndexRouteImport.update({
+  id: '/lists/',
+  path: '/lists/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListsNoteIdRoute = ListsNoteIdRouteImport.update({
   id: '/lists/$noteId',
   path: '/lists/$noteId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesIndexRoute = NotesIndexRouteImport.update({
+  id: '/notes/',
+  path: '/notes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesNoteIdRoute = NotesNoteIdRouteImport.update({
+  id: '/notes/$noteId',
+  path: '/notes/$noteId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
+  id: '/api/trpc/$',
+  path: '/api/trpc/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GemsBibleParamIndexRoute = GemsBibleParamIndexRouteImport.update({
@@ -69,11 +74,6 @@ const GemsBibleParamIndexRoute = GemsBibleParamIndexRouteImport.update({
 const GemsBibleParamNewRoute = GemsBibleParamNewRouteImport.update({
   id: '/gems/$bibleParam/new',
   path: '/gems/$bibleParam/new',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
-  id: '/api/trpc/$',
-  path: '/api/trpc/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -175,11 +175,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/wt': {
-      id: '/wt'
-      path: '/wt'
-      fullPath: '/wt'
-      preLoaderRoute: typeof WtRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mw': {
@@ -189,25 +189,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MwRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/notes/': {
-      id: '/notes/'
-      path: '/notes'
-      fullPath: '/notes/'
-      preLoaderRoute: typeof NotesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lists/': {
-      id: '/lists/'
-      path: '/lists'
-      fullPath: '/lists/'
-      preLoaderRoute: typeof ListsIndexRouteImport
+    '/wt': {
+      id: '/wt'
+      path: '/wt'
+      fullPath: '/wt'
+      preLoaderRoute: typeof WtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gems/': {
@@ -217,11 +203,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GemsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/notes/$noteId': {
-      id: '/notes/$noteId'
-      path: '/notes/$noteId'
-      fullPath: '/notes/$noteId'
-      preLoaderRoute: typeof NotesNoteIdRouteImport
+    '/lists/': {
+      id: '/lists/'
+      path: '/lists'
+      fullPath: '/lists/'
+      preLoaderRoute: typeof ListsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lists/$noteId': {
@@ -229,6 +215,27 @@ declare module '@tanstack/react-router' {
       path: '/lists/$noteId'
       fullPath: '/lists/$noteId'
       preLoaderRoute: typeof ListsNoteIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes/': {
+      id: '/notes/'
+      path: '/notes'
+      fullPath: '/notes/'
+      preLoaderRoute: typeof NotesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes/$noteId': {
+      id: '/notes/$noteId'
+      path: '/notes/$noteId'
+      fullPath: '/notes/$noteId'
+      preLoaderRoute: typeof NotesNoteIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/trpc/$': {
+      id: '/api/trpc/$'
+      path: '/api/trpc/$'
+      fullPath: '/api/trpc/$'
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gems/$bibleParam/': {
@@ -243,13 +250,6 @@ declare module '@tanstack/react-router' {
       path: '/gems/$bibleParam/new'
       fullPath: '/gems/$bibleParam/new'
       preLoaderRoute: typeof GemsBibleParamNewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/trpc/$': {
-      id: '/api/trpc/$'
-      path: '/api/trpc/$'
-      fullPath: '/api/trpc/$'
-      preLoaderRoute: typeof ApiTrpcSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
